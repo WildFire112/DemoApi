@@ -1,16 +1,16 @@
 import React from 'react'
-import { Link, BrowserRouter as Router } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Nav = () => {
   return (
-    <Router>
-      <Link to="/Login">
+    <div className="nav">
+      <Link to="/Login" className="nav-btn">
         Login
-      </Link>
-      <Link to="/Register">
+      </Link> <br />
+      <Link to="/Register" className="nav-btn">
         Register
-      </Link>
-    </Router>
+      </Link> <br />
+    </div>
   )
 }
 

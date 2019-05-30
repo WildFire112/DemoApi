@@ -38,21 +38,46 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div>
-        <h3>
-          Register
-        </h3>
-        <form onSubmit={e => this.submit(e)}>
-          <label>Name</label>
-          <input type="text" name="name" onChange={e => this.change(e)} value={this.state.name} /><br />
-
-          <label>E-mail</label>
-          <input type="email" name="email" onChange={e => this.change(e)} value={this.state.email} /><br />
-
-          <label>Password</label>
-          <input type="password" name="password" onChange={e => this.change(e)} value={this.state.value} />
-
-          <input type="submit" value="Register"/>
+      <div className="wrap-auth">
+        <form onSubmit={e => this.submit(e)} className="auth-form">
+          <h2 className="auth-title">
+            Register
+          </h2>
+          <div className="wrap-input">
+            <label className="auth-label">Name</label>
+            <input
+              type="text"
+              name="name"
+              onChange={e => this.change(e)}
+              value={this.state.name}
+              className="auth-input"
+              placeholder="Type your name"
+            />
+          </div>
+          <div className="wrap-input">
+            <label className="auth-label">E-mail</label>
+            <input
+              type="email"
+              name="email"
+              onChange={e => this.change(e)}
+              value={this.state.email}
+              className="auth-input"
+              placeholder="Type your e-mail"
+            />
+          </div>
+          <div className='wrap-input'>
+            <label className="auth-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              onChange={e => this.change(e)}
+              value={this.state.password}
+              autoComplete="false"
+              className="auth-input"
+              placeholder="type your password"
+            />
+          </div>
+          <input type="submit" value="Register" className="submit-btn" />
         </form>
       </div>
     )

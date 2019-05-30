@@ -39,18 +39,35 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div>
-        <h3>
-          Login
-        </h3>
-        <form onSubmit={ e => this.submit(e)}>
-          <label>E-mail</label>
-          <input type="email" name="email" onChange={e => this.change(e)} value={this.state.email} /><br />
-
-          <label>Password</label>
-          <input type="password" name="password" onChange={e => this.change(e)} value={this.state.password} />
-
-          <input type="submit" value="Login"/>
+      <div className="wrap-auth">
+        <form onSubmit={e => this.submit(e)} className="auth-form">
+          <h2 className="auth-title">
+            Login
+          </h2>
+          <div className="wrap-input">
+            <label className="auth-label">E-mail</label>
+            <input
+              type="email"
+              name="email"
+              onChange={e => this.change(e)}
+              value={this.state.email}
+              className="auth-input"
+              placeholder="Type your e-mail"
+            />
+          </div>
+          <div className='wrap-input'>
+            <label className="auth-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              onChange={e => this.change(e)}
+              value={this.state.password}
+              autoComplete="false"
+              className="auth-input"
+              placeholder="type your password"
+            />
+          </div>
+          <input type="submit" value="Login" className="submit-btn" />
         </form>
       </div>
     )
