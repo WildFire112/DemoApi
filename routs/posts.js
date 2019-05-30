@@ -2,6 +2,7 @@ const router = require('express').Router()
 const Post = require('../models/Post')
 const verify = require('./verifyToken')
 
+
 router.get('/', verify, (req, res) => {
   res.send(req.user)
 })
@@ -64,5 +65,6 @@ router.patch('/:postId', async (req, res) => {
     res.json({ massege: err })
   }
 })*/
+
 
 module.exports = router

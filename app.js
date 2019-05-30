@@ -7,6 +7,7 @@ const dotenv = require('dotenv')
 const postsRoute = require('./routs/posts')
 const authRoute = require('./routs/auth')
 
+
 dotenv.config()
 
 // Connect to db
@@ -26,4 +27,4 @@ app.get('/', (req, res) => {
   res.send('We are on home')
 })
 
-app.listen(3000, () => { console.log('Server Up and running') })
+app.listen(5000, () => { console.log('Server Up and running') })
