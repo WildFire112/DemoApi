@@ -10,11 +10,16 @@ export default class Register extends Component {
       password: '',
       name: '',
       idName: '',
-      errors: []
+      errors: [],
+      isOn: false
     }
 
     this.change = this.change.bind(this)
     this.submit = this.submit.bind(this)
+  }
+
+  switch() {
+    this.setState({isOn: !this.state.isOn})
   }
 
   change(e) {
@@ -42,58 +47,60 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div className="wrap-auth">
-        <form onSubmit={e => this.submit(e)} className="auth-form">
-          <h2 className="auth-title">
-            Register
+      <div className={this.state.isOn ? "register-wrap":"register-wrap-none"}>
+        <div className="wrap-auth">
+          <form onSubmit={e => this.submit(e)} className="auth-form">
+            <h2 className="auth-title">
+              Register
           </h2>
-          <div className="wrap-input">
-            <label className="auth-label">Name</label>
-            <input
-              type="text"
-              name="name"
-              onChange={e => this.change(e)}
-              value={this.state.name}
-              className="auth-input"
-              placeholder="Type your name"
-            />
-          </div>
-          <div className="wrap-input">
-            <label className="auth-label">ID name</label>
-            <input
-              type="text"
-              name="idName"
-              onChange={e => this.change(e)}
-              value={this.state.idName}
-              className="auth-input"
-              placeholder="Type your ID name"
-            />
-          </div>
-          <div className="wrap-input">
-            <label className="auth-label">E-mail</label>
-            <input
-              type="email"
-              name="email"
-              onChange={e => this.change(e)}
-              value={this.state.email}
-              className="auth-input"
-              placeholder="Type your e-mail"
-            />
-          </div>
-          <div className='wrap-input'>
-            <label className="auth-label">Password</label>
-            <input
-              type="password"
-              name="password"
-              onChange={e => this.change(e)}
-              value={this.state.password}
-              autoComplete="false"
-              className="auth-input"
-              placeholder="Type your password"
-            />
-          </div>
-          <input type="submit" value="Register" className="submit-btn" />
-        </form>
+            <div className="wrap-input">
+              <label className="auth-label">Name</label>
+              <input
+                type="text"
+                name="name"
+                onChange={e => this.change(e)}
+                value={this.state.name}
+                className="auth-input"
+                placeholder="Type your name"
+              />
+            </div>
+            <div className="wrap-input">
+              <label className="auth-label">ID name</label>
+              <input
+                type="text"
+                name="idName"
+                onChange={e => this.change(e)}
+                value={this.state.idName}
+                className="auth-input"
+                placeholder="Type your ID name"
+              />
+            </div>
+            <div className="wrap-input">
+              <label className="auth-label">E-mail</label>
+              <input
+                type="email"
+                name="email"
+                onChange={e => this.change(e)}
+                value={this.state.email}
+                className="auth-input"
+                placeholder="Type your e-mail"
+              />
+            </div>
+            <div className='wrap-input'>
+              <label className="auth-label">Password</label>
+              <input
+                type="password"
+                name="password"
+                onChange={e => this.change(e)}
+                value={this.state.password}
+                autoComplete="false"
+                className="auth-input"
+                placeholder="Type your password"
+              />
+            </div>
+            <input type="submit" value="Register" className="submit-btn" />
+          </form>
+        </div>
       </div>
     )
   }
