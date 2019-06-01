@@ -19,9 +19,9 @@ function App() {
                 <Switch>
                     <Route path="/Login" exact component={Login} />
                     <Route path="/Register" exact component={Register} />
-                    <Route path="/" exact component={Home} />
                     <AuthenticatedComponent >
                         <Route path="/Protected" exact component={Protected} />
+                        <Route path="/" exact component={Home} />
                     </AuthenticatedComponent>
                 </Switch>
             </div>

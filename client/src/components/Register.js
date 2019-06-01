@@ -8,7 +8,9 @@ export default class Register extends Component {
     this.state = {
       email: '',
       password: '',
-      name: ''
+      name: '',
+      idName: '',
+      errors: []
     }
 
     this.change = this.change.bind(this)
@@ -23,13 +25,15 @@ export default class Register extends Component {
 
   submit(e) {
     e.preventDefault()
-    axios.post('/api/user/register', {
+    axios.post('/api/auth/register', {
       name: this.state.name,
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      idName: this.state.idName
     })
       .then(res => {
-        console.log(JSON.stringify(res))
+        localStorage.setItem('cool-jwt', res.data)
+        this.props.history.push('/')
       })
       .catch(err => {
         console.log(err)
@@ -55,6 +59,17 @@ export default class Register extends Component {
             />
           </div>
           <div className="wrap-input">
+            <label className="auth-label">ID name</label>
+            <input
+              type="text"
+              name="idName"
+              onChange={e => this.change(e)}
+              value={this.state.idName}
+              className="auth-input"
+              placeholder="Type your ID name"
+            />
+          </div>
+          <div className="wrap-input">
             <label className="auth-label">E-mail</label>
             <input
               type="email"
@@ -74,7 +89,7 @@ export default class Register extends Component {
               value={this.state.password}
               autoComplete="false"
               className="auth-input"
-              placeholder="type your password"
+              placeholder="Type your password"
             />
           </div>
           <input type="submit" value="Register" className="submit-btn" />

@@ -6,6 +6,7 @@ const dotenv = require('dotenv')
 // Import Routes
 const postsRoute = require('./routs/posts')
 const authRoute = require('./routs/auth')
+const userRoute = require('./routs/user')
 
 
 dotenv.config()
@@ -20,7 +21,8 @@ app.use(bodyParser.json())
 
 // Route Middlewares
 app.use('/api/posts', postsRoute)
-app.use('/api/user', authRoute)
+app.use('/api/auth', authRoute)
+app.use('/api/user', userRoute)
 
 // Routes
 app.get('/', (req, res) => {

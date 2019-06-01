@@ -22,7 +22,7 @@ export default class Login extends Component {
 
   submit(e) {
     e.preventDefault()
-    axios.post('api/user/login', {
+    axios.post('api/auth/login', {
       email: this.state.email,
       password: this.state.password
     })
@@ -30,7 +30,7 @@ export default class Login extends Component {
         localStorage.setItem('cool-jwt', res.data)
         console.log(JSON.stringify(res.data));
 
-        this.props.history.push('/Protected')
+        this.props.history.push('/')
       })
       .catch(err => {
         console.log(err)
@@ -64,7 +64,7 @@ export default class Login extends Component {
               value={this.state.password}
               autoComplete="false"
               className="auth-input"
-              placeholder="type your password"
+              placeholder="Type your password"
             />
           </div>
           <input type="submit" value="Login" className="submit-btn" />

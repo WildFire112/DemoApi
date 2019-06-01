@@ -2,19 +2,29 @@ const router = require('express').Router()
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
-const { registerValidation, LoginValidation } = require('../validation')
+const { check, validationResult } = require('express-validator/check');
 
 
 // Register
-router.post('/register', async (req, res) => {
-console.log(req.body)
-  // Validate data
-  const { error } = registerValidation(req.body)
-  if (error) return res.status(400).send(error.details[0].message)
+router.post('/register', [
+  check('name', "Name is required").isLength({ min: 2, max: 16 }),
+  check('idName', "Please enter a valid ID name").isLength({ min: 6, max: 16 }),
+  check('email', "Please enter a valid e-mail").isEmail(),
+  check('password', "Please enter a password with 6 or more characters").isLength({ min: 6, max: 24 })
+], async (req, res) => {
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const idNameExist = await User.findOne({ idName: req.body.idName })
+  if (idNameExist) res.status(400).json({ errors: [{ param: "idName", msg: "ID name already exists" }] })
 
   // Checking if the user is already in database
   const emailExist = await User.findOne({ email: req.body.email })
-  if (emailExist) return res.status(400).send('Email already exists')
+  if (emailExist) res.status(400).json({ errors: [{ param: "email", msg: "Email already exists" }] })
 
   // Hash the password
   const salt = await bcrypt.genSalt(10)
@@ -24,12 +34,14 @@ console.log(req.body)
   const user = new User({
     name: req.body.name,
     email: req.body.email,
-    password: hashPassword
+    password: hashPassword,
+    idName: req.body.idName
   })
 
   try {
     const savedUser = await user.save()
-    res.send({ user: user._id })
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
+    res.header('auth-token', token).send(token)
   } catch (err) {
     res.status(400).send(err)
   }
@@ -37,22 +49,27 @@ console.log(req.body)
 })
 
 // Login
-router.post('/login', async (req, res) => {
+router.post('/login', [
+  check('email', "Please enter valid e-mail").isEmail(),
+  check('password', "Password is required").not().isEmpty()
+], async (req, res) => {
 
-  // Validate data
-  const { error } = LoginValidation(req.body)
-  if (error) return res.status(400).send(error.details[0].message)
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
   // Checking if the user is already in database
   const user = await User.findOne({ email: req.body.email })
-  if (!user) return res.status(400).send('Email or password is wrong')
+  if (!user) res.status(400).json({ errors: [{ param: "emailOrPassword", msg: "Email or password is wrong" }] })
 
   // Checking password
   const validPass = await bcrypt.compare(req.body.password, user.password)
-  if(!validPass) return res.status(400).send('Email or password is wrong')
+  if (!validPass) res.status(400).json({ errors: [{ param: "emailOrPassword", msg: "Email or password is wrong" }] })
 
   // Create and assign a token
-  const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET)
+  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
   res.header('auth-token', token).send(token)
 })
 
