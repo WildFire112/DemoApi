@@ -10,13 +10,14 @@ router.get('/', verify, (req, res) => {
       const user = {
         name: data.name,
         idName: data.idName,
+        email: data.email,
         status: data.status,
         _id: data._id
       }
-      res.status(200).send(user)
+      res.status(200).json(user)
     })
     .catch(err => {
-      res.status(400).send(err)
+      res.status(400).json({errors: err})
     })
 
 })

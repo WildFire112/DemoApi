@@ -25,7 +25,7 @@ router.post('/register', [
 
   // Checking if the user is already in database
   const emailExist = await User.findOne({ email: req.body.email })
-  if (emailExist) return res.status(400).json({ errors: [{ param: "email", msg: "E-mailуже занят" }] })
+  if (emailExist) return res.status(400).json({ errors: [{ param: "email", msg: "E-mail уже занят" }] })
 
   // Hash the password
   const salt = await bcrypt.genSalt(10)
@@ -60,8 +60,8 @@ router.post('/register', [
 
 // Login
 router.post('/login', [
-  check('email', "Please enter valid e-mail").isEmail(),
-  check('password', "Password is required").not().isEmpty()
+  check('email', "Введите правильный e-mail").isEmail(),
+  check('password', "Требуеться пароль").not().isEmpty()
 ], async (req, res) => {
 
   const errors = validationResult(req);
@@ -72,11 +72,11 @@ router.post('/login', [
 
   // Checking if the user is already in database
   const user = await User.findOne({ email: req.body.email })
-  if (!user) return res.status(400).json({ errors: [{ param: "emailOrPassword", msg: "Email or password is wrong" }] })
+  if (!user) return res.status(400).json({ errors: [{ param: "emailOrPassword", msg: "Неверный e-mail или пароль" }] })
 
   // Checking password
   const validPass = await bcrypt.compare(req.body.password, user.password)
-  if (!validPass) return res.status(400).json({ errors: [{ param: "emailOrPassword", msg: "Email or password is wrong" }] })
+  if (!validPass) return res.status(400).json({ errors: [{ param: "emailOrPassword", msg: "Неверный e-mail или пароль" }] })
 
   // Create and assign a token
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
