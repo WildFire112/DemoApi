@@ -35,6 +35,14 @@ const userSchema = mongoose.Schema({
     required: false,
     max: 250,
     default: ''
+  },
+  header: {
+    type: String,
+    required: false
+  },
+  avatar: {
+    type: String,
+    required: false
   }
 })
 

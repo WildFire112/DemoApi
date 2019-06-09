@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { connect } from 'react-redux';
 // imort components
-import AuthenticatedComponent from './AuthenticatedComponent'
 import Home from './Home'
 import Nav from './Nav'
 //import Protected from './Protected'
@@ -15,16 +15,11 @@ function App() {
             <Nav />
             <div className="app">
                 <Switch>
-                    {/* <Route path="/Login" exact component={Login} />
-                    <Route path="/Register" exact component={Register} /> */}
-                    <AuthenticatedComponent >
-                        {/* <Route path="/Protected" exact component={Protected} /> */}
-                        <Route path="/" exact component={Home} />
-                    </AuthenticatedComponent>
+                    <Route path="/" exact component={Home} />
                 </Switch>
             </div>
         </Router>
     )
 }
 
-export default App
+export default connect(null, null)(App)

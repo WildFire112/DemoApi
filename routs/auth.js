@@ -36,7 +36,9 @@ router.post('/register', [
     name: req.body.name,
     email: req.body.email,
     password: hashPassword,
-    idName: req.body.idName
+    idName: req.body.idName,
+    avatar: '',
+    header: ''
   })
 
   try {
@@ -48,6 +50,8 @@ router.post('/register', [
         idName: savedUser.idName,
         email: savedUser.email,
         status: savedUser.status,
+        header: user.header,
+        avatar: user.avatar,
         _id: savedUser._id
       },
       token
@@ -86,6 +90,8 @@ router.post('/login', [
       idName: user.idName,
       email: user.email,
       status: user.status,
+      header: user.header,
+      avatar: user.avatar,
       _id: user._id
     },
     token

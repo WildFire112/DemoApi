@@ -3,6 +3,7 @@ const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
+const formData = require('express-form-data')
 // Import Routes
 const postsRoute = require('./routs/posts')
 const authRoute = require('./routs/auth')
@@ -18,6 +19,7 @@ mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true }, () =>
 
 // Middlewares
 app.use(bodyParser.json())
+app.use(formData.parse())
 
 // Route Middlewares
 app.use('/api/posts', postsRoute)

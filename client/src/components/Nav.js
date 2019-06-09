@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/pro-solid-svg-icons'
-import Login from './Login'
-import Register from './Register';
+import Register from './Register'
+import Login from './Login';
+import { connect } from 'react-redux';
 
 
-export default class Nav extends Component {
+class Nav extends Component {
   constructor(props) {
     super(props)
 
@@ -14,19 +15,30 @@ export default class Nav extends Component {
       loginIsOn: false,
       registerIsOn: false
     }
-
-    this.registerSwitch = this.registerSwitch.bind(this)
-    this.loginSwitch = this.loginSwitch.bind(this)
-    this.registerElement = React.createRef()
-    this.loginElement = React.createRef()
   }
 
-  registerSwitch(e) {
-    this.registerElement.current.switch()
+  registerSwitch = e => {
+    if (this.state.loginIsOn)
+      this.setState({
+        loginIsOn: !this.state.loginIsOn
+      })
+    else
+      this.setState({
+        loginIsOn: !this.state.loginIsOn,
+        registerIsOn: false
+      })
   }
 
-  loginSwitch(e) {
-    this.loginElement.current.switch()
+  loginSwitch = e => {
+    if (this.state.registerIsOn)
+      this.setState({
+        registerIsOn: !this.state.registerIsOn
+      })
+    else
+      this.setState({
+        registerIsOn: !this.state.registerIsOn,
+        loginIsOn: false
+      })
   }
 
   render() {
@@ -48,20 +60,20 @@ export default class Nav extends Component {
           </Link>
           </div>
           <div className="nav-right">
-            <Link to="/" className="nav-search">
+            <div className="nav-search">
               <FontAwesomeIcon icon={faSearch} color="#808080" />
-            </Link>
+            </div>
             <div className="nav-btn-register-container">
               <div className="nav-btn-register" onClick={e => this.registerSwitch(e)}>
                 Регистрация
-            </div>
-              <Register ref={this.registerElement} />
+              </div>
+              {/* <Register /> */}
             </div>
             <div className="nav-btn-login-container" onClick={e => this.loginSwitch(e)}>
               <div className="nav-btn-login">
                 Войти
-            </div>
-              <Login ref={this.loginElement} />
+              </div>
+              {/* this.state.loginIsOn ? <Login /> : ''*/}
             </div>
           </div>
         </div>
@@ -70,4 +82,4 @@ export default class Nav extends Component {
   }
 }
 
-
+export default connect(null, null)(Nav)

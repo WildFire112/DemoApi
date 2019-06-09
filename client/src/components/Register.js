@@ -1,107 +1,100 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import {connect} from 'react-redux'
 
-export default class Register extends Component {
+import { registerNewUser } from '../store/user/actions';
+
+class Register extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      email: '',
-      password: '',
       name: '',
       idName: '',
-      errors: [],
-      isOn: false
+      email: '',
+      password: '',
+      repeatPassword: '',
+      errors: this.props.errors
     }
-
-    this.change = this.change.bind(this)
-    this.submit = this.submit.bind(this)
   }
 
-  switch() {
-    this.setState({isOn: !this.state.isOn})
+  onChange = e => {
+    this.setState({[e.target.name]: e.target.value})
   }
 
-  change(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+  onIdNameChange = e => {
+    // eslint-disable-next-line
+    const value = '@' + e.target.value.trim().replace(/[^\w\.]/gi, '')
+    this.setState({idName: value === '@' ? '' : value})
   }
 
-  submit(e) {
-    e.preventDefault()
-    axios.post('/api/auth/register', {
+  onSubmit = e => {
+    const userData = {
       name: this.state.name,
+      idName: this.state.idName,
       email: this.state.email,
       password: this.state.password,
-      idName: this.state.idName
-    })
-      .then(res => {
-        localStorage.setItem('cool-jwt', res.data)
-        this.props.history.push('/')
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      repeatPassword: this.state.repeatPassword
+    }
+    this.props.registerNewUser(userData)
   }
 
   render() {
     return (
-      <div className={this.state.isOn ? "register-wrap":"register-wrap-none"}>
-        <div className="wrap-auth">
-          <form onSubmit={e => this.submit(e)} className="auth-form">
-            <h2 className="auth-title">
-              Register
-          </h2>
-            <div className="wrap-input">
-              <label className="auth-label">Name</label>
-              <input
-                type="text"
-                name="name"
-                onChange={e => this.change(e)}
-                value={this.state.name}
-                className="auth-input"
-                placeholder="Type your name"
-              />
-            </div>
-            <div className="wrap-input">
-              <label className="auth-label">ID name</label>
-              <input
-                type="text"
-                name="idName"
-                onChange={e => this.change(e)}
-                value={this.state.idName}
-                className="auth-input"
-                placeholder="Type your ID name"
-              />
-            </div>
-            <div className="wrap-input">
-              <label className="auth-label">E-mail</label>
-              <input
-                type="email"
-                name="email"
-                onChange={e => this.change(e)}
-                value={this.state.email}
-                className="auth-input"
-                placeholder="Type your e-mail"
-              />
-            </div>
-            <div className='wrap-input'>
-              <label className="auth-label">Password</label>
-              <input
-                type="password"
-                name="password"
-                onChange={e => this.change(e)}
-                value={this.state.password}
-                autoComplete="false"
-                className="auth-input"
-                placeholder="Type your password"
-              />
-            </div>
-            <input type="submit" value="Register" className="submit-btn" />
-          </form>
-        </div>
-      </div>
+      <div className="sign-block">
+      <input
+        type="email"
+        name="email"
+        placeholder="e-mail"
+        className="input"
+        value={this.state.email}
+        onChange={this.onChange}
+      />
+      <input
+        type="text"
+        name="name"
+        placeholder="имя"
+        className="input"
+        value={this.state.name}
+        onChange={this.onChange}
+      />
+      <input
+        type="text"
+        name="idName"
+        placeholder="id"
+        className="input"
+        value={this.state.idName}
+        onChange={this.onIdNameChange}
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="пароль"
+        className="input"
+        value={this.state.password}
+        onChange={this.onChange}
+      />
+      <input
+        type="password"
+        name="repeatPassword"
+        placeholder="повторите пароль"
+        className="input"
+        value={this.state.repeatPassword}
+        onChange={this.onChange}
+      />
+      <div className="sign-btn" onClick={this.onSubmit}>SIGN UP</div>
+    </div>
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    errors: state.errors.registrationErrors
+  }
+}
+
+const mapDispatchToProps = {
+  registerNewUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register)
