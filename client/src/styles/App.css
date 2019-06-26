@@ -1,0 +1,24 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.header-container{
+  height: 250px;
+  width: 100%;
+}
+
+.header-container > img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* TODO: удалить */
+.Test{
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px dotted #a0a0a0
+}
