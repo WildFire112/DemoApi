@@ -54,7 +54,7 @@ class NavBar extends Component {
   onIdNameChange = e => {
     // eslint-disable-next-line
     const value = '@' + e.target.value.trim().replace(/[^\w\.]/gi, '')
-    this.setState({ idName: value === '@' ? '' : value })
+    this.setState({ registerIdName: value === '@' ? '' : value })
   }
 
   logOut = e => {

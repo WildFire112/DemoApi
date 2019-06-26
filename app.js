@@ -13,8 +13,8 @@ const userRoute = require('./routs/user')
 dotenv.config()
 
 // Connect to db
-mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true }, () =>
-  console.log('connected to db!')
+mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true }, (err) =>
+  console.log('connected to db!\nconnection errors:', err)
 )
 
 // Middlewares
