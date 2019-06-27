@@ -8,6 +8,7 @@ const formData = require('express-form-data')
 const postsRoute = require('./routs/posts')
 const authRoute = require('./routs/auth')
 const userRoute = require('./routs/user')
+const path = require('path')
 
 
 dotenv.config()
@@ -26,9 +27,13 @@ app.use('/api/posts', postsRoute)
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
 
-// Routes
-app.get('/', (req, res) => {
-  res.send('We are on home')
-})
+// Sevre static assets in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'))
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+}
+const PORT = process.env.PORT || 5000;
 
-app.listen(5000, () => { console.log('Server Up and running') })
+app.listen(PORT, () => { console.log('Server Up and running') })
