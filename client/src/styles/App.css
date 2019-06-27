@@ -8,6 +8,7 @@
 .header-container{
   height: 250px;
   width: 100%;
+  margin-bottom: 25px;
 }
 
 .header-container > img{
@@ -21,4 +22,43 @@
   margin-top: 20px;
   padding: 10px;
   border: 1px dotted #a0a0a0
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.horizontal > input {
+  width: 338px;
+  height: 40px;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid var(--light-gray-color);
+  border-radius: 5px;
+  margin-right: 12px;
+}
+
+.horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.create-post-text {
+  min-width: 500px;
+  max-width: 500px;
+  min-height: 40px;
+  max-height: 140px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.create-post-button {
+  height: 40px;
+  width: 150px;
+  border: 1px solid var(--light-gray-color);
+  border-radius: 5px;
 }

@@ -17,12 +17,14 @@ router.get('/', async (req, res) => {
     res.json({ massege: err })
   }
 })
+*/
 
 // Submits a post
 router.post('/', async (req, res) => {
   const post = new Post({
     title: req.body.title,
-    description: req.body.description
+    description: req.body.description,
+    authorId: req.body.authorId
   })
 
   try {
@@ -33,6 +35,7 @@ router.post('/', async (req, res) => {
   }
 })
 
+/*
 // Getting post
 router.get('/:postId', async (req, res) => {
   try {

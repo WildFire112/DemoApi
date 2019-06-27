@@ -13,6 +13,10 @@ const PostSChema = mongoose.Schema({
   date:{
     type: Date,
     default: Date.now
+  },
+  authorId:{
+    type: String,
+    required: true
   }
 })
 

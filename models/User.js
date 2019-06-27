@@ -36,14 +36,12 @@ const userSchema = mongoose.Schema({
     max: 250,
     default: ''
   },
-  header: {
-    type: String,
-    required: false
-  },
-  avatar: {
-    type: String,
-    required: false
-  }
+  posts: [{
+    postId: {
+      type: String,
+      required: true
+    }
+  }]
 })
 
 

@@ -23,7 +23,6 @@ router.get('/', verify, (req, res) => {
 
 router.get('/:idName', (req, res) => {
   const idName = req.params.idName
-  console.log(idName)
 
   User.findOne({ idName })
     .then(data => {
@@ -39,20 +38,6 @@ router.get('/:idName', (req, res) => {
     })
     .catch(err => {
       res.status(400).json({ err: 'Пользователь не найден' })
-    })
-})
-
-router.post('/header', verify, (req, res) => {
-  const uid = req.user._id
-
-  const imgData = req.body.data
-  console.log(imgData)
-  User.findByIdAndUpdate({ _id: uid }, { $set: { header: imgData } }, {returnNewDocument: true})
-    .then(res => {
-      res.status(200).json(res)
-    })
-    .catch(err => {
-      res.status(400).json({ err: 'Что-то пошло не так' })
     })
 })
 

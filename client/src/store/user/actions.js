@@ -94,21 +94,3 @@ export const getUserByIdName = idName => {
       })
   }
 }
-
-export const sendHeaderImage = file => {
-  return (dispatch) => {
-    const jwt = localStorage.getItem('cool-jwt')
-    const reader = new FileReader()
-    reader.readAsDataURL(file[0])
-    reader.onloadend = () => {
-      return axios.post('/api/user/header', {data: reader.result}, { headers: { 'auth-token': jwt } })
-        .then(res => {
-          dispatch(getUser(res.data, {}))
-        })
-        .catch(err => {
-          dispatch(getUser({}, { msg: err.response.data }))
-        })
-    }
-
-  }
-}

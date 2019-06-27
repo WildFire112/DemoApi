@@ -10,7 +10,7 @@ const defaultState = {
 export const userReducer = (state = defaultState, action) => {
   switch (action.type) {
     case IS_LOGGED_IN:
-      if (!localStorage.getItem('cool-jwt'))
+      if (action.errors.msg)
         return {
           ...defaultState,
           errors: action.errors
