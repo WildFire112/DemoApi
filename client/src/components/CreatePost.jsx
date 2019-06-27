@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { addNewPost } from '../store/post/actions';
+import { addNewPost, getAllPosts } from '../store/post/actions';
 
 class CreatePost extends Component {
   constructor(props) {
@@ -18,6 +18,7 @@ class CreatePost extends Component {
 
   handleClick = () => {
     this.props.addNewPost(this.props.authorId, this.state.title, this.state.description)
+    this.props.getAllPosts()
   }
 
   render() {
@@ -38,7 +39,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  addNewPost
+  addNewPost,
+  getAllPosts
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatePost)

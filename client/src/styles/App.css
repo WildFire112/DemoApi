@@ -62,3 +62,16 @@
   border: 1px solid var(--light-gray-color);
   border-radius: 5px;
 }
+
+.post {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 5px #48484830;
+  margin-top: 12px;
+}
+
+.Test {
+  width: 500px;
+  margin: 12px auto;
+}

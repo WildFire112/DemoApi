@@ -17,7 +17,7 @@ class App extends Component {
       <Router>
         <NavBar />
         <Switch>
-          <Route path="/user/:id" exact component={Blog} />
+          {this.props.LoggedIn ? <Route path="/user/:id" exact component={Blog} /> : <></>}
         </Switch>
         {test(this.props)}
       </Router>

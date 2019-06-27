@@ -3,11 +3,6 @@ const Post = require('../models/Post')
 const verify = require('./verifyToken')
 
 
-router.get('/', verify, (req, res) => {
-  res.send(req.user)
-})
-
-/*
 // Get back all tehe posts
 router.get('/', async (req, res) => {
   try {
@@ -17,7 +12,7 @@ router.get('/', async (req, res) => {
     res.json({ massege: err })
   }
 })
-*/
+
 
 // Submits a post
 router.post('/', async (req, res) => {

@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import Header from './Header';
+import CreatePost from './CreatePost';
 
 import { getUserByIdName } from '../store/user/actions';
-import CreatePost from './CreatePost';
+import { getAllPosts } from '../store/post/actions';
+import Post from './Post';
 
 
 export class Blog extends Component {
@@ -14,6 +16,7 @@ export class Blog extends Component {
 
   componentWillMount() {
     this.props.getUserByIdName(this.props.match.params.id)
+    this.props.getAllPosts()
   }
 
   render() {
@@ -25,7 +28,9 @@ export class Blog extends Component {
             <CreatePost />
             <div className="posts-container">
               {
-
+                this.props.posts.map(post => 
+                  <Post post={post}/>
+                )
               }
             </div>
           </div>
@@ -36,11 +41,13 @@ export class Blog extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  user: state.user,
+  posts: state.posts.posts
 })
 
 const mapDispatchToProps = {
-  getUserByIdName
+  getUserByIdName,
+  getAllPosts
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Blog)

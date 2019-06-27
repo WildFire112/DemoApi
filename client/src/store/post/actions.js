@@ -1,13 +1,16 @@
 import axios from 'axios'
 
 export const ADD_NEW_POST = 'ADD_NEW_POST'
+export const GET_ALL_POSTS = 'GET_ALL_POSTS'
 
-
-const addNew = (title, description, authorId) => ({
+const addNew = (post) => ({
   type: ADD_NEW_POST,
-  title,
-  description,
-  authorId
+  post
+})
+
+const getAll = (posts) => ({
+  type: GET_ALL_POSTS,
+  posts
 })
 
 export const addNewPost = (authorId, title, description) => {
@@ -18,10 +21,22 @@ export const addNewPost = (authorId, title, description) => {
       description
     })
       .then(res => {
-        dispatch(addNew(title, description, authorId))
+        dispatch(addNew(res.data))
       })
       .catch(err => {
-        dispatch(addNew(title, description, authorId))
+        console.log(err)
+      })
+  }
+}
+
+export const getAllPosts = () => {
+  return (dispatch) => {
+    return axios.get('/api/posts/')
+      .then(res => {
+        dispatch(getAll(res.data))
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
 }
